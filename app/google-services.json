@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "99358525271",
+    "project_id": "moneymanagerrefactor",
+    "storage_bucket": "moneymanagerrefactor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99358525271:android:e2f5007f55c58cda242012",
+        "android_client_info": {
+          "package_name": "com.ohno.moneymanagerrefactor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99358525271-joackv9ufffkachnpk4jcq864rcdhqlc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDv6tr8u6BMySFo9CstmWWSZ7B626GaCp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "99358525271-gr1oa8npu1o177tre8s4qfcjk74stuu0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
