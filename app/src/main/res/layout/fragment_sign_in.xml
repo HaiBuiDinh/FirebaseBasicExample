@@ -136,15 +136,6 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-<!--        <com.facebook.login.widget.LoginButton-->
-<!--            android:id="@+id/btn_login_fb_2"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_marginTop="16dp"-->
-<!--            android:layout_gravity="center"-->
-<!--            xmlns:facebook="http://schemas.android.com/apk/res-auto"-->
-<!--            facebook:com_facebook_login_text="Sign in" />-->
-
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

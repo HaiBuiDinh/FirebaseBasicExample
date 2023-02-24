@@ -25,5 +25,9 @@ class HomeFragment: AbsFragment() {
             Toast.makeText(context, "Sign out!", Toast.LENGTH_SHORT).show()
             PageUtils.replaceFragment(requireActivity(), SignInFragment())
         }
+
+        binding.btnGoToFirestore.setOnClickListener {
+            PageUtils.replaceFragment(requireActivity(), FirestoreTestFragment())
+        }
     }
 }
