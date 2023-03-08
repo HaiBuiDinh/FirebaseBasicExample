@@ -16,6 +16,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.ohno.moneymanagerrefactor.R
+import com.ohno.moneymanagerrefactor.ui.activity.MainActivity
 import com.ohno.moneymanagerrefactor.ui.fragment.HomeFragment
 import com.ohno.moneymanagerrefactor.util.PageUtils
 
@@ -114,7 +115,7 @@ object GoogleSignInHelper {
                 if (task.isSuccessful) {
                     Log.d(TAG, "signInWithCredential:success")
                     val user = firebaseAuth.currentUser
-                    PageUtils.replaceFragment(activity, HomeFragment())
+                    PageUtils.goToActivity(activity, MainActivity::class.java)
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                     Toast.makeText(activity, "Authentication Failed.", Toast.LENGTH_SHORT).show()

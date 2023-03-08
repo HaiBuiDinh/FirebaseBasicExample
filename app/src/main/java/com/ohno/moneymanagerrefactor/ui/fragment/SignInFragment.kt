@@ -43,7 +43,7 @@ class SignInFragment: AbsFragment() {
         callbackManager = CallbackManager.Factory.create()
 
         binding.tvGoToSignUp.setOnClickListener {
-            PageUtils.replaceFragment(requireActivity(), SignUpFragment())
+            PageUtils.replaceSignFragment(requireActivity(), SignUpFragment())
         }
 
         binding.btnSignIn.setOnClickListener {

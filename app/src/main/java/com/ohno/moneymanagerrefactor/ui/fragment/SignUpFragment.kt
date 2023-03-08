@@ -19,7 +19,7 @@ class SignUpFragment: AbsFragment() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         binding.tvGoToSignIn.setOnClickListener {
-            PageUtils.replaceFragment(requireActivity(), SignInFragment())
+            PageUtils.replaceSignFragment(requireActivity(), SignInFragment())
         }
         binding.btnSignUp.setOnClickListener {
             val email = binding.edtEmail.text.toString()
@@ -30,7 +30,7 @@ class SignUpFragment: AbsFragment() {
                 if (password == confirmPassword) {
                     firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
                         if (it.isSuccessful) {
-                            PageUtils.replaceFragment(requireActivity(), SignInFragment())
+                            PageUtils.replaceSignFragment(requireActivity(), SignInFragment())
                         } else {
                             Toast.makeText(context, it.exception.toString(), Toast.LENGTH_SHORT).show()
                         }

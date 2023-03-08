@@ -1,11 +1,13 @@
 package com.ohno.moneymanagerrefactor.util.signinhelper
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.ohno.moneymanagerrefactor.ui.activity.MainActivity
 import com.ohno.moneymanagerrefactor.ui.fragment.HomeFragment
 import com.ohno.moneymanagerrefactor.util.PageUtils
 
@@ -23,7 +25,7 @@ object EmailAndPassSignInHelper {
             // TO-DO check xem email đã đúng định dạng chưa
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                 if (it.isSuccessful) {
-                    PageUtils.replaceFragment(activity, HomeFragment())
+                    PageUtils.goToActivity(activity, MainActivity::class.java)
                     Toast.makeText(context, "Successful!", Toast.LENGTH_SHORT).show()
                 } else {
                     Log.d(TAG, it.exception.toString())

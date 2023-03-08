@@ -2,6 +2,8 @@ package com.ohno.moneymanagerrefactor.ui.fragment
 
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.*
@@ -13,7 +15,10 @@ import com.ohno.moneymanagerrefactor.databinding.FragmentFirestoreBinding
 import com.ohno.moneymanagerrefactor.ui.adapter.CourseAdapter
 import com.ohno.moneymanagerrefactor.util.CourseUtil
 import com.google.firebase.firestore.ktx.toObject
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class FirestoreTestFragment : AbsFragment() {
 
     private lateinit var binding: FragmentFirestoreBinding
@@ -25,6 +30,8 @@ class FirestoreTestFragment : AbsFragment() {
     private lateinit var mAdapter: CourseAdapter
 
     private var uId: String? = null
+
+    private val mFireStoreViewModel: FireStoreViewModel by viewModels()
 
     override fun layoutId(): Int = R.layout.fragment_firestore
 
@@ -39,68 +46,16 @@ class FirestoreTestFragment : AbsFragment() {
         binding.rcvCourse.adapter = mAdapter
 
         binding.btnGetRandomCourse.setOnClickListener {
-            addRandomCourse()
+            mFireStoreViewModel.addRandomCourse(db, uId)
         }
 
         val dbRef = db.collection("Courses").document(uId!!).collection("CourseUID")
 
-        observerFirebaseData(dbRef) { newListCourse ->
-            mAdapter.setListItem(newListCourse)
-        }
-    }
-
-    private fun observerFirebaseData(dbRef: CollectionReference, callBack: (listData: List<Course>) -> Unit) {
-        dbRef.orderBy("duration", Query.Direction.DESCENDING).addSnapshotListener { value, error ->
-            if (value != null) {
-                Log.d(FirestoreTestFragment.TAG, "data change!")
-                val listDocument = value.documents
-                val listCourse: ArrayList<Course> = arrayListOf()
-                listDocument.forEach {
-                    it?.let {
-                        listCourse.add(it.toObject<Course>()!!)
-                    }
-                }
-                callBack(listCourse)
+        mFireStoreViewModel.observerDataFromFirebase(dbRef) { newListCourse ->
+            lifecycleScope.launch {
+                mAdapter.setListItem(newListCourse)
             }
         }
-    }
-
-    private fun addRandomCourse() {
-        val course = CourseUtil.getRandomCourse()
-        Log.d(
-            TAG,
-            "Random course: name = ${course.name}, description = ${course.description}, duration = ${course.duration}"
-        )
-
-        db.collection("Courses").document(uId!!).collection("CourseUID")
-            .add(course).addOnSuccessListener { task ->
-                Log.d(TAG, "Add success with ID: ${task.id}")
-            }
-            .addOnFailureListener { task ->
-                Log.d(TAG, "Add fail ${task.toString()}")
-            }
-    }
-
-    private fun getDataFromFirebase(dbRef: CollectionReference, callBack: (listData: List<Course>) -> Unit) {
-        dbRef.orderBy("duration", Query.Direction.DESCENDING).get()
-            .addOnSuccessListener { it ->
-                if (!it.isEmpty) {
-                    val listCourse: ArrayList<Course> = arrayListOf()
-                    val listDocSnap = it.documents
-                    listDocSnap.forEach { docSnap ->
-                        Log.d(TAG, docSnap.data.toString())
-
-                        docSnap?.let {
-                            val tempCourse = docSnap.toObject<Course>()
-                            if (tempCourse != null) listCourse.add(tempCourse)
-                        }
-
-                    }
-                    callBack(listCourse)
-                } else {
-                    Log.d(TAG, "No data found in DB")
-                }
-            }
     }
 
     companion object {
